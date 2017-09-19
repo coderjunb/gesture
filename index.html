@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title></title>
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+    }
+    
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    li {
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 1px solid #999;
+        position: relative;
+    }
+    
+    #ul {
+        width: 100%;
+        height: 200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+    .left,
+    .right,
+    .up,
+    .down {
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        line-height: 100px;
+        border: 1px solid #999;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    
+    .left {
+        left: 30px;
+        top: 220px;
+        background-color: rgba(0, 0, 0, 0.3)
+    }
+    
+    .right {
+        background-color: rgba(255, 0, 0, 0.3)
+    }
+    
+    .up {
+        background-color: rgba(0, 255, 0, 0.3)
+    }
+    
+    .down {
+        background-color: rgba(0, 0, 255, 0.3)
+    }
+    </style>
+</head>
+
+<body>
+    <ul id="ul">
+        <li>内容1</li>
+        <li>内容2</li>
+        <li>内容3</li>
+        <li>内容4</li>
+        <li>内容5</li>
+        <li>内容6</li>
+        <li>内容1</li>
+        <li>内容2</li>
+        <li>内容3</li>
+        <li>内容4</li>
+        <li>内容5</li>
+        <li>内容6</li>
+    </ul>
+    <div class="left">
+        left
+        <div class="right">
+            right
+            <div class="up">
+                up
+                <div class="down">
+                    down
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript" src="gesture.js"></script>
+    <script type="text/javascript">
+    var bd = 0;
+    bui.gesture({
+        type: "right",
+        handle: document.body,
+        onMove: function(startEvent, moveEvent) {
+            s = moveEvent.clientX - startEvent.clientX;
+            this.style.transform = 'translate3d(' + (bd + s) + 'px,0,0)'
+        },
+        onEnd: function() {
+            bd += s;
+        }
+    });
+    var li = 0;
+    var s = 0;
+
+    bui.gesture({
+        type: "left",
+        isSingle: true,
+        handle: "#ul",
+        selector: "li",
+        onMove: function(startEvent, moveEvent) {
+            s = moveEvent.clientX - startEvent.clientX;
+            this.style.transform = 'translate3d(' + (li + s) + 'px,0,0)'
+        },
+        onEnd: function() {
+            li += s;
+        }
+    });
+    var l = r = u = d = 0;
+    bui.gesture({
+        type: "left",
+        handle: ".left",
+        onMove: function(startEvent, moveEvent) {
+            s = moveEvent.clientX - startEvent.clientX
+            this.style.transform = 'translate3d(' + (l + s) + 'px,0,0)'
+        },
+        onEnd: function(startEvent, endEvent) {
+            l += s;
+        }
+    });
+    bui.gesture({
+        type: "right",
+        handle: ".right",
+        onMove: function(startEvent, moveEvent) {
+            s = moveEvent.clientX - startEvent.clientX
+            this.style.transform = 'translate3d(' + (r + s) + 'px,0,0)'
+        },
+        onEnd: function(startEvent, endEvent) {
+            r += s;
+
+        }
+    });
+    bui.gesture({
+        type: "up",
+        handle: ".up",
+        onMove: function(startEvent, moveEvent) {
+            s = moveEvent.clientY - startEvent.clientY
+            this.style.transform = 'translate3d(0,' + (u + s) + 'px,0)'
+        },
+        onEnd: function(startEvent, endEvent) {
+            u += s;
+
+        }
+    });
+    bui.gesture({
+        type: "down",
+        handle: ".down",
+        onMove: function(startEvent, moveEvent) {
+            s = moveEvent.clientY - startEvent.clientY
+            this.style.transform = 'translate3d(0,' + (d + s) + 'px,0)'
+        },
+        onEnd: function(startEvent, endEvent) {
+            d += s;
+        }
+    });
+    </script>
+</body>
+
+</html>
